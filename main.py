@@ -20,14 +20,9 @@ def user_geocode():
         LOCATION_ENDPOINT, params=location_parameters)
     location_raw_data.raise_for_status()
     location_data = location_raw_data.json()
-    print(location_data)
-    print("================================================================")
 
     latitude = location_data['results'][0]['geometry']['location']['lat']
     longitude = location_data['results'][0]['geometry']['location']['lng']
-    print(latitude)
-    print(longitude)
-    print("================================================================")
     return (latitude, longitude)
 
 
