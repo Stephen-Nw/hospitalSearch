@@ -25,7 +25,6 @@ def user_geocode():
         print(err)  # placeholder - redirect to a 404 page
     else:
         location_data = location_raw_data.json()
-        print(location_data)
         if location_data['status'] == 'ZERO_RESULTS':
             print("NO RESULTS FOUND!!")  # placeholder - redirect to a 404 page
             return False
