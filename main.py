@@ -25,10 +25,14 @@ def user_geocode():
         print(err)  # placeholder - redirect to a 404 page
     else:
         location_data = location_raw_data.json()
-
-        latitude = location_data['results'][0]['geometry']['location']['lat']
-        longitude = location_data['results'][0]['geometry']['location']['lng']
-        return (latitude, longitude)
+        print(location_data)
+        if location_data['status'] == 'ZERO_RESULTS':
+            print("NO RESULTS FOUND!!")  # placeholder - redirect to a 404 page
+            return False
+        else:
+            latitude = location_data['results'][0]['geometry']['location']['lat']
+            longitude = location_data['results'][0]['geometry']['location']['lng']
+            return (latitude, longitude)
 
 
 loc = user_geocode()
