@@ -3,6 +3,7 @@ import os
 
 
 def user_geocode():
+    """Obtain a user's latitude and longitude from a provided address"""
 
     GOOGLE_API_KEY = os.environ.get('GOOGLE_PLACE_API')
 
