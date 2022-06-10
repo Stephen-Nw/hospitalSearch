@@ -17,14 +17,18 @@ def user_geocode():
 
     }
 
-    location_raw_data = requests.get(
-        LOCATION_ENDPOINT, params=location_parameters)
-    location_raw_data.raise_for_status()
-    location_data = location_raw_data.json()
+    try:
+        location_raw_data = requests.get(
+            LOCATION_ENDPOINT, params=location_parameters)
+        location_raw_data.raise_for_status()
+    except requests.exceptions.HTTPError as err:
+        print(err)  # placeholder - redirect to a 404 page
+    else:
+        location_data = location_raw_data.json()
 
-    latitude = location_data['results'][0]['geometry']['location']['lat']
-    longitude = location_data['results'][0]['geometry']['location']['lng']
-    return (latitude, longitude)
+        latitude = location_data['results'][0]['geometry']['location']['lat']
+        longitude = location_data['results'][0]['geometry']['location']['lng']
+        return (latitude, longitude)
 
 
 loc = user_geocode()
