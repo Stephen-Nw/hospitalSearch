@@ -1,11 +1,11 @@
 import requests
 import os
 
+GOOGLE_API_KEY = os.environ.get('GOOGLE_PLACE_API')
+
 
 def user_geocode():
     """Obtain a user's latitude and longitude from a provided address"""
-
-    GOOGLE_API_KEY = os.environ.get('GOOGLE_PLACE_API')
 
     user_location = input("Enter your address: \n")
 
@@ -34,5 +34,22 @@ def user_geocode():
             return (latitude, longitude)
 
 
-loc = user_geocode()
-print(loc)
+# loc = user_geocode()
+# print(loc)
+
+
+def hospital_search():
+    USER_ENDPOINT = "https://maps.googleapis.com/maps/api/place/nearbysearch/json"
+
+    search_parameters = {
+        "location": (36.751117, -95.91744450000002),
+        "key": GOOGLE_API_KEY,
+        "type": "hospital",
+        "rankby": "distance"
+
+    }
+
+    search_data = requests.get(USER_ENDPOINT, params=search_parameters)
+    search_data.raise_for_status()
+    print(search_data)
+    return
