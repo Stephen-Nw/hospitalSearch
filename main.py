@@ -1,5 +1,6 @@
 import requests
 import os
+import googlemaps
 
 GOOGLE_API_KEY = os.environ.get('GOOGLE_PLACE_API')
 
@@ -39,17 +40,33 @@ def user_geocode():
 
 
 def hospital_search():
+
+    # gmaps = googlemaps.Client(key=GOOGLE_API_KEY)
+    # geocode_result = gmaps.geocode("4996 Princeton Drive, Bartlesville, OK")
+    # print(geocode_result)
+
+    user_coordinates = user_geocode()
+    user_latitude = user_coordinates[0]
+    user_longitude = user_coordinates[1]
+
     USER_ENDPOINT = "https://maps.googleapis.com/maps/api/place/nearbysearch/json"
 
-    search_parameters = {
-        "location": (36.751117, -95.91744450000002),
-        "key": GOOGLE_API_KEY,
-        "type": "hospital",
-        "rankby": "distance"
+    # search_parameters = {
+    #     "location": "36.153980%2C-95.992775",
+    #     "radius": 1500,
+    #     "type": "hospital",
+    #     "key": GOOGLE_API_KEY,
+    # }
 
-    }
+    search_raw_data = requests.get(
+        f"https://maps.googleapis.com/maps/api/place/nearbysearch/json?location={user_latitude}%2C{user_longitude}&radius=1500&type=hospital&key={GOOGLE_API_KEY}")
+    # search_raw_data = requests.get(url=USER_ENDPOINT, params=search_parameters)
+    search_raw_data.raise_for_status()
+    search_data = search_raw_data.json()
 
-    search_data = requests.get(USER_ENDPOINT, params=search_parameters)
-    search_data.raise_for_status()
-    print(search_data)
-    return
+    # print(search_data)
+    return search_data
+
+
+hosp_search = hospital_search()
+print(hosp_search)
