@@ -46,7 +46,9 @@ def hospital_search():
     search_raw_data.raise_for_status()
     search_data = search_raw_data.json()
 
-    return search_data
+    hospital_data = search_data['results']
+
+    return hospital_data
 
 
 print(hospital_search())
