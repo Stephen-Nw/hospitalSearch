@@ -41,14 +41,16 @@ def hospital_search():
     user_latitude = user_coordinates[0]
     user_longitude = user_coordinates[1]
 
-    hospital_raw_data = requests.get(
-        f"https://maps.googleapis.com/maps/api/place/nearbysearch/json?location={user_latitude}%2C{user_longitude}&radius=1500&type=hospital&key={GOOGLE_API_KEY}")
-    hospital_raw_data.raise_for_status()
-    hospital_data = hospital_raw_data.json()
-
-    hospital_search_results = hospital_data['results']
-
-    return hospital_search_results
+    try:
+        hospital_raw_data = requests.get(
+            f"https://maps.googleapis.com/maps/api/place/nearbysearch/json?location={user_latitude}%2C{user_longitude}&radius=1500&type=hospital&key={GOOGLE_API_KEY}")
+        hospital_raw_data.raise_for_status()
+    except requests.exceptions.HTTPError as err:
+        print(err)  # Placeholder - redirect to a 404 page
+    else:
+        hospital_data = hospital_raw_data.json()
+        hospital_search_results = hospital_data['results']
+        return hospital_search_results
 
 
 print(hospital_search())
