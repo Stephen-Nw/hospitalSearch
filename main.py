@@ -68,6 +68,7 @@ def hospital_search():
 # hospital_search()
 
 def hospital_dictionary():
+    """Convert hospital list from hospital_search function to dictionary"""
     hospital_attributes = ['Name', 'Address', 'User Rating']
     hospitals = hospital_search()
 
