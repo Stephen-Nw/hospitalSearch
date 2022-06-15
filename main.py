@@ -27,7 +27,7 @@ def user_geocode():
     else:
         location_data = location_raw_data.json()
         if location_data['status'] == 'ZERO_RESULTS':
-            print("NO RESULTS FOUND!!")  # placeholder - redirect to a 404 page
+            print("NO ADDRESS FOUND!!")  # placeholder - redirect to a 404 page
             return False
         else:
             latitude = location_data['results'][0]['geometry']['location']['lat']
@@ -43,14 +43,20 @@ def hospital_search():
 
     try:
         hospital_raw_data = requests.get(
-            f"https://maps.googleapis.com/maps/api/place/nearbysearch/json?location={user_latitude}%2C{user_longitude}&radius=1500&type=hospital&key={GOOGLE_API_KEY}")
+            f"https://maps.googleapis.com/maps/api/place/nearbysearch/json?location={user_latitude}%2C{user_longitude}&radius=500&type=hospital&key={GOOGLE_API_KEY}")
         hospital_raw_data.raise_for_status()
     except requests.exceptions.HTTPError as err:
         print(err)  # Placeholder - redirect to a 404 page
     else:
         hospital_data = hospital_raw_data.json()
-        hospital_search_results = hospital_data['results']
-        return hospital_search_results
+        print(hospital_data)
+        if hospital_data['status'] == 'ZERO_RESULTS':
+            # placeholder - redirect to a 404 page
+            print("NO HOSPITALS FOUND!!")
+            return False
+        else:
+            hospital_search_results = hospital_data['results']
+            return hospital_search_results
 
 
 print(hospital_search())
