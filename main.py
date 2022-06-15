@@ -77,7 +77,6 @@ def hospital_dictionary():
             hospital_item = []
             name = hospital['name']
             address = hospital['vicinity']
-            # ratings = hospital['rating']
             hospital_item.extend([name, address])
             temporary_hospital_list.append(hospital_item)
 
