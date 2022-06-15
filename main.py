@@ -61,7 +61,6 @@ def hospital_search():
         else:
             hospital_search_results = hospital_data['results']
             print(len(hospital_search_results))
-            print(hospital_search_results)
             return hospital_search_results
 
 
@@ -69,7 +68,7 @@ def hospital_search():
 
 def hospital_dictionary():
     """Convert hospital list from hospital_search function to dictionary"""
-    hospital_attributes = ['Name', 'Address', 'User Rating']
+    hospital_attributes = ['Name', 'Address']
     hospitals = hospital_search()
 
     if hospitals != False:
@@ -78,8 +77,8 @@ def hospital_dictionary():
             hospital_item = []
             name = hospital['name']
             address = hospital['vicinity']
-            ratings = hospital['rating']
-            hospital_item.extend([name, address, ratings])
+            # ratings = hospital['rating']
+            hospital_item.extend([name, address])
             temporary_hospital_list.append(hospital_item)
 
         final_hospital_list = []
