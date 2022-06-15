@@ -35,7 +35,7 @@ def user_geocode():
 
 
 def hospital_search():
-
+    """Locate hospitals within a specified geographical radius using coordinates from the user_geocode function"""
     user_coordinates = user_geocode()
 
     if user_coordinates != False:
@@ -63,4 +63,4 @@ def hospital_search():
             return hospital_search_results
 
 
-hospital_search()
+# hospital_search()
