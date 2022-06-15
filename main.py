@@ -27,7 +27,6 @@ def user_geocode():
     else:
         location_data = location_raw_data.json()
         if location_data['status'] == 'ZERO_RESULTS':
-            print("NO ADDRESS FOUND!!")  # placeholder - redirect to a 404 page
             return False
         else:
             latitude = location_data['results'][0]['geometry']['location']['lat']
@@ -43,7 +42,7 @@ def hospital_search():
         user_latitude = user_coordinates[0]
         user_longitude = user_coordinates[1]
     else:
-        print('ADDRESS NOT FOUND')
+        print('ADDRESS NOT FOUND')  # placeholder - redirect to a 404 page
         return False
 
     try:
