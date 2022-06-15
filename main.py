@@ -38,8 +38,13 @@ def user_geocode():
 def hospital_search():
 
     user_coordinates = user_geocode()
-    user_latitude = user_coordinates[0]
-    user_longitude = user_coordinates[1]
+
+    if user_coordinates != False:
+        user_latitude = user_coordinates[0]
+        user_longitude = user_coordinates[1]
+    else:
+        print('ADDRESS NOT FOUND')
+        return False
 
     try:
         hospital_raw_data = requests.get(
@@ -59,4 +64,4 @@ def hospital_search():
             return hospital_search_results
 
 
-print(hospital_search())
+hospital_search()
