@@ -47,20 +47,51 @@ def hospital_search():
 
     try:
         hospital_raw_data = requests.get(
-            f"https://maps.googleapis.com/maps/api/place/nearbysearch/json?location={user_latitude}%2C{user_longitude}&radius=500&type=hospital&key={GOOGLE_API_KEY}")
+            f"https://maps.googleapis.com/maps/api/place/nearbysearch/json?location={user_latitude}%2C{user_longitude}&radius=6000&type=hospital&key={GOOGLE_API_KEY}")
         hospital_raw_data.raise_for_status()
     except requests.exceptions.HTTPError as err:
         print(err)  # Placeholder - redirect to a 404 page
     else:
         hospital_data = hospital_raw_data.json()
-        print(hospital_data)
+        # print(hospital_data)
         if hospital_data['status'] == 'ZERO_RESULTS':
             # placeholder - redirect to a 404 page
             print("NO HOSPITALS FOUND!!")
             return False
         else:
             hospital_search_results = hospital_data['results']
+            print(len(hospital_search_results))
+            print(hospital_search_results)
             return hospital_search_results
 
 
 # hospital_search()
+
+def hospital_dictionary():
+    hospital_attributes = ['Name', 'Address', 'User Rating']
+    hospitals = hospital_search()
+
+    if hospitals != False:
+        temporary_hospital_list = []
+        for hospital in hospitals:
+            hospital_item = []
+            name = hospital['name']
+            address = hospital['vicinity']
+            ratings = hospital['rating']
+            hospital_item.extend([name, address, ratings])
+            temporary_hospital_list.append(hospital_item)
+
+        final_hospital_list = []
+        for hospital in temporary_hospital_list:
+            hospital_dictionary_conversion = dict(
+                zip(hospital_attributes, hospital))
+            final_hospital_list.append(hospital_dictionary_conversion)
+
+        return final_hospital_list
+
+    else:
+        print("THERE ARE NO HOSPITALS AROUND YOUR LOCATION")
+        return False
+
+
+print(hospital_dictionary())
